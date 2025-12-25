@@ -1,0 +1,21 @@
+name: FABRICAR_APK_DP
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparar Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Dar Poder ao Motor
+        run: chmod +x gradlew
+      - name: Gerar APK Agora
+        run: ./gradlew assembleDebug -x test
+      - name: Entregar o Produto
+        uses: actions/upload-artifact@v4
+        with:
+          name: meu_projeto_final
+          path: "**/*.apk"
